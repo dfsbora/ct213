@@ -48,6 +48,13 @@ class PathPlanner(object):
         :rtype: list of tuples and float.
         """
 		# Todo: implement the Dijkstra algorithm
+        x_start, y_start = start_position
+        start_node = Node(x_start, y_start)
+        pq = []
+        heapq.heappush(pq, start_node)
+
+
+
 		# The first return is the path as sequence of tuples (as returned by the method construct_path())
 		# The second return is the cost of the path
         self.node_grid.reset()
