@@ -215,7 +215,6 @@ class MoveForwardNode(LeafNode):
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
         if agent.get_bumper_state():
             return ExecutionStatus.FAILURE
@@ -241,7 +240,6 @@ class MoveInSpiralNode(LeafNode):
         radius = constants.INITIAL_RADIUS_SPIRAL + constants.SPIRAL_FACTOR * self.t
         self.w = self.v/radius
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
         if agent.get_bumper_state():
             return ExecutionStatus.FAILURE
@@ -265,7 +263,6 @@ class GoBackNode(LeafNode):
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
         if self.t > constants.GO_BACK_TIME:
             return ExecutionStatus.SUCCESS
@@ -283,12 +280,11 @@ class RotateNode(LeafNode):
         self.t = 0
         self.v = 0
         self.w = constants.ANGULAR_SPEED
-        self.t_max = random.uniform(-math.pi/2, math.pi/2) / self.w
+        self.t_max = random.uniform(-math.pi, math.pi) / self.w
 
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
         if self.t > self.t_max:
             return ExecutionStatus.SUCCESS

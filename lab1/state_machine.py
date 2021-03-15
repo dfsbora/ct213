@@ -71,7 +71,6 @@ class MoveForwardState(State):
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
 
 
@@ -97,7 +96,6 @@ class MoveInSpiralState(State):
         radius = constants.INITIAL_RADIUS_SPIRAL + SPIRAL_FACTOR * self.t
         self.w = self.v/radius
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
         pass
 
@@ -120,7 +118,6 @@ class GoBackState(State):
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
 
 
@@ -130,7 +127,7 @@ class RotateState(State):
         self.t = 0
         self.v = 0
         self.w = constants.ANGULAR_SPEED
-        self.t_max = random.uniform(-math.pi/2, math.pi/2) / self.w
+        self.t_max = random.uniform(-math.pi, math.pi) / self.w
 
     def check_transition(self, agent, state_machine):
         # Todo: add logic to check and execute state transition
@@ -142,6 +139,5 @@ class RotateState(State):
     def execute(self, agent):
         # Todo: add execution logic
         agent.set_velocity(self.v, self.w)
-        agent.move()
         self.t += constants.SAMPLE_TIME
 
