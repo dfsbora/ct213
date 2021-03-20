@@ -87,14 +87,14 @@ class PathPlanner(object):
         """
 
         start_node = Node(start_position[0], start_position[1])
-        start_node.g = start_node.distance_to(goal_position[0], goal_position[1])
+        start_node.f = start_node.distance_to(goal_position[0], goal_position[1])
         pq = []
-        heapq.heappush(pq, (start_node.g, start_node))
+        heapq.heappush(pq, (start_node.f, start_node))
         while pq:
             cost, node = heapq.heappop(pq)
             sucessors = self.node_grid.get_successors(node.i, node.j)
-            for next in sucessors:
-                next_node = self.node_grid.get_node(next[0],next[1])
+            for sucessor in sucessors:
+                next_node = self.node_grid.get_node(sucessor[0], sucessor[1])
                 if next_node.closed:
                     continue
                 next_node.parent = node
@@ -102,8 +102,8 @@ class PathPlanner(object):
                     goal_node = next_node
                     pq = []
                     break
-                next_node.g = next_node.distance_to(goal_position[0], goal_position[1])
-                heapq.heappush(pq, (next_node.g, next_node))
+                next_node.f = next_node.distance_to(goal_position[0], goal_position[1])
+                heapq.heappush(pq, (next_node.f, next_node))
             node.closed = True
 
         path = self.construct_path(goal_node)
@@ -111,7 +111,6 @@ class PathPlanner(object):
 
         self.node_grid.reset()
         return path, cost
-
 
     def a_star(self, start_position, goal_position):
         """
