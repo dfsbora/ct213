@@ -123,8 +123,36 @@ class PathPlanner(object):
         :return: the path as a sequence of positions and the path cost.
         :rtype: list of tuples and float.
         """
-		# Todo: implement the A* algorithm
-		# The first return is the path as sequence of tuples (as returned by the method construct_path())
-		# The second return is the cost of the path
+
+        start_node = Node(start_position[0], start_position[1])
+        start_node.g = 0
+        start_node.f = start_node.distance_to(goal_position[0], goal_position[1])
+        pq = []
+        heapq.heappush(pq, (start_node.f, start_node))
+        while pq:
+            cost, node = heapq.heappop(pq)
+            sucessors = self.node_grid.get_successors(node.i, node.j)
+            for sucessor in sucessors:
+                next_node = self.node_grid.get_node(sucessor[0], sucessor[1])
+                if next_node.closed:
+                    continue
+                next_node.parent = node
+                if next_node.i == goal_position[0] and next_node.j == goal_position[1]:
+                    goal_node = next_node
+                    pq = []
+                    break
+                heuristic = next_node.distance_to(goal_position[0], goal_position[1])
+                edge_cost = self.cost_map.get_edge_cost((node.i,node.j),(next_node.i,next_node.j))
+                if next_node.f > node.g + edge_cost + heuristic:
+                    next_node.g = node.g + edge_cost
+                    next_node.f = next_node.g + heuristic
+                    next_node.parent = node
+                    heapq.heappush(pq, (next_node.f, next_node))
+                #heapq.heappush(pq, (next_node.f, next_node))
+            node.closed = True
+
+        path = self.construct_path(goal_node)
+        cost = goal_node.f
+
         self.node_grid.reset()
-        return [], inf
+        return path, cost
