@@ -90,23 +90,21 @@ class PathPlanner(object):
         start_node.g = start_node.distance_to(goal_position[0], goal_position[1])
         pq = []
         heapq.heappush(pq, (start_node.g, start_node))
-        found = False
-        while pq and not found:
+        while pq:
             cost, node = heapq.heappop(pq)
             sucessors = self.node_grid.get_successors(node.i, node.j)
-            for next in sucessors:   # (i,j) in (i,j)(i,j)(i,j)
+            for next in sucessors:
                 next_node = self.node_grid.get_node(next[0],next[1])
                 if next_node.closed:
                     continue
                 next_node.parent = node
                 if next_node.i == goal_position[0] and next_node.j == goal_position[1]:
                     goal_node = next_node
-                    found = True
+                    pq = []
                     break
                 next_node.g = next_node.distance_to(goal_position[0], goal_position[1])
                 heapq.heappush(pq, (next_node.g, next_node))
             node.closed = True
-
 
         path = self.construct_path(goal_node)
         cost = goal_node.f
