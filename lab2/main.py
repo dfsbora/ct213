@@ -47,6 +47,7 @@ def plot_path(cost_map, start, goal, path, filename, save_fig=True, show_fig=Tru
     plt.plot(start[1], start[0], 'y*', markersize=8)
     plt.plot(goal[1], goal[0], 'rx', markersize=8)
 
+
     plt.xlabel('x / j')
     plt.ylabel('y / i')
     if 'dijkstra' in filename:
@@ -85,6 +86,7 @@ path_planner = PathPlanner(cost_map)
 times = np.zeros((num_iterations, 1))
 costs = np.zeros((num_iterations, 1))
 for i in range(num_iterations):
+    print("iteration ", i)
     problem_valid = False
     while not problem_valid:
         # Trying to generate a new problem
