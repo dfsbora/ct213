@@ -26,4 +26,18 @@ def simulated_annealing(cost_function, random_neighbor, schedule, theta0, epsilo
     theta = theta0
     history = [theta0]
     # Todo: Implement Simulated Annealing
+
+    for i in range(0,max_iterations):
+        temperature = schedule(i)
+        if temperature < 0.0:
+            return theta
+        neighbor = random_neighbor(theta)
+        delta = cost_function(theta) - cost_function(neighbor)
+        if delta > 0:
+            theta = neighbor
+        else:
+            r = random.uniform(0.0, 1.0) # Draws random number w/ uniform dist.
+            if r <= exp(delta / temperature):
+                theta = neighbor
+        history.append(theta)
     return theta, history
