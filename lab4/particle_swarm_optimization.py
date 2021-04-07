@@ -108,11 +108,10 @@ class ParticleSwarmOptimization:
                     self.best_iteration.cost = particle.cost
                     self.best_iteration.x = particle.x
 
-
             rp = random.uniform(0.0, 1.0)
             rg = random.uniform(0.0, 1.0)
 
-            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg**(self.best_global.x-particle.x)
+            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg*(self.best_global.x-particle.x)
             particle.x = particle.x + particle.v
 
 
