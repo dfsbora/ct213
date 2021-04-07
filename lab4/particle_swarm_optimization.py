@@ -42,21 +42,20 @@ class ParticleSwarmOptimization:
     """
     def __init__(self, hyperparams, lower_bound, upper_bound):
         # Todo: implement
-        self.num_particles = hyperparams.num_particles
-        self.inertia_weight = hyperparams.inertia_weight
-        self.cognitive_parameter = hyperparams.cognitive_parameter
-        self.social_parameter = hyperparams.social_parameter
+        self.hyperparams = hyperparams
 
         self.index = 0  # particle index
         self.particles = []
         for i in range(hyperparams.num_particles):
             self.particles.append(Particle(lower_bound, upper_bound))
 
-        self.best_global_x = np.zeros(3)
-        self.best_global_cost = float("-inf")
+        self.best_global = Particle(lower_bound, upper_bound)
+        self.best_global.x = np.zeros(np.size(lower_bound))
+        self.best_global.cost = float("-inf")
 
-        self.best_iteration_x = np.zeros(3)
-        self.best_iteration_cost = float("-inf")
+        self.best_iteration = Particle(lower_bound, upper_bound)
+        self.best_iteration.x = np.zeros(np.size(lower_bound))
+        self.best_iteration.cost = float("-inf")
 
     def get_best_position(self):
         """
@@ -66,7 +65,7 @@ class ParticleSwarmOptimization:
         :rtype: numpy array.
         """
         # Todo: implement
-        return self.best_global_x
+        return self.best_global.x
 
     def get_best_value(self):
         """
@@ -76,7 +75,7 @@ class ParticleSwarmOptimization:
         :rtype: float.
         """
         # Todo: implement
-        return self.best_global_cost
+        return self.best_global.cost
 
     def get_position_to_evaluate(self):
         """
@@ -93,12 +92,11 @@ class ParticleSwarmOptimization:
         Advances the generation of particles. Auxiliary method to be used by notify_evaluation().
         """
         # Todo: implement
-        self.num_particles
-        w = self.inertia_weight         #omega
-        phip = self.cognitive_parameter    #phi p
-        phig = self.social_parameter       #phi g
-        self.best_iteration_x = None
-        self.best_iteration_cost = float("-inf")
+        w = self.hyperparams.inertia_weight
+        phip = self.hyperparams.cognitive_parameter
+        phig = self.hyperparams.social_parameter
+        self.best_iteration.x = None
+        self.best_iteration.cost = float("-inf")
 
         for particle in self.particles:
 
@@ -106,17 +104,16 @@ class ParticleSwarmOptimization:
                 particle.best_cost = particle.cost
                 particle.best = particle.x
 
-                if particle.cost > self.best_iteration_cost:
-                    self.best_iteration_cost = particle.cost
-                    self.best_iteration_x = particle.x
+                if particle.cost > self.best_iteration.cost:
+                    self.best_iteration.cost = particle.cost
+                    self.best_iteration.x = particle.x
 
 
             rp = random.uniform(0.0, 1.0)
             rg = random.uniform(0.0, 1.0)
 
-            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg**(self.best_global_x-particle.x)
+            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg**(self.best_global.x-particle.x)
             particle.x = particle.x + particle.v
-
 
 
         self.index = 0
@@ -133,11 +130,11 @@ class ParticleSwarmOptimization:
         self.particles[self.index].cost = value
 
         self.index = self.index + 1
-        if self.index >= self.num_particles:
+        if self.index >= self.hyperparams.num_particles:
             self.advance_generation()
 
-            if self.best_iteration_cost > self.best_global_cost:
-                self.best_global_x = self.best_iteration_x
-                self.best_global_cost = self.best_iteration_cost
+            if self.best_iteration.cost > self.best_global.cost:
+                self.best_global.x = self.best_iteration.x
+                self.best_global.cost = self.best_iteration.cost
 
 
