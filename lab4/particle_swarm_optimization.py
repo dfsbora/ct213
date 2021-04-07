@@ -17,7 +17,12 @@ class Particle:
         :type upper_bound: numpy array.
         """
         # Todo: implement
-        pass  # Remove this line
+        self.x = np.random.uniform(lower_bound, upper_bound)
+        self.best = self.x
+        self.best_cost = -float("inf")
+        delta = upper_bound - lower_bound
+        self.v = np.random.uniform(-delta,delta)
+        self.cost = None
 
 
 class ParticleSwarmOptimization:
@@ -37,8 +42,21 @@ class ParticleSwarmOptimization:
     """
     def __init__(self, hyperparams, lower_bound, upper_bound):
         # Todo: implement
-        self.lower_bound = lower_bound
-        self.upper_bound = upper_bound
+        self.num_particles = hyperparams.num_particles
+        self.inertia_weight = hyperparams.inertia_weight
+        self.cognitive_parameter = hyperparams.cognitive_parameter
+        self.social_parameter = hyperparams.social_parameter
+
+        self.index = 0  # particle index
+        self.particles = []
+        for i in range(hyperparams.num_particles):
+            self.particles.append(Particle(lower_bound, upper_bound))
+
+        self.best_global_x = np.zeros(3)
+        self.best_global_cost = float("-inf")
+
+        self.best_iteration_x = np.zeros(3)
+        self.best_iteration_cost = float("-inf")
 
     def get_best_position(self):
         """
@@ -48,7 +66,7 @@ class ParticleSwarmOptimization:
         :rtype: numpy array.
         """
         # Todo: implement
-        return self.lower_bound  # Remove this line
+        return self.best_global_x
 
     def get_best_value(self):
         """
@@ -58,7 +76,7 @@ class ParticleSwarmOptimization:
         :rtype: float.
         """
         # Todo: implement
-        return 0.0  # Remove this line
+        return self.best_global_cost
 
     def get_position_to_evaluate(self):
         """
@@ -68,14 +86,40 @@ class ParticleSwarmOptimization:
         :rtype: numpy array.
         """
         # Todo: implement
-        return self.lower_bound  # Remove this line
+        return self.particles[self.index].x
 
     def advance_generation(self):
         """
         Advances the generation of particles. Auxiliary method to be used by notify_evaluation().
         """
         # Todo: implement
-        pass  # Remove this line
+        self.num_particles
+        w = self.inertia_weight         #omega
+        phip = self.cognitive_parameter    #phi p
+        phig = self.social_parameter       #phi g
+        self.best_iteration_x = None
+        self.best_iteration_cost = float("-inf")
+
+        for particle in self.particles:
+
+            if particle.cost > particle.best_cost:
+                particle.best_cost = particle.cost
+                particle.best = particle.x
+
+                if particle.cost > self.best_iteration_cost:
+                    self.best_iteration_cost = particle.cost
+                    self.best_iteration_x = particle.x
+
+
+            rp = random.uniform(0.0, 1.0)
+            rg = random.uniform(0.0, 1.0)
+
+            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg**(self.best_global_x-particle.x)
+            particle.x = particle.x + particle.v
+
+
+
+        self.index = 0
 
     def notify_evaluation(self, value):
         """
@@ -85,5 +129,15 @@ class ParticleSwarmOptimization:
         :type value: float.
         """
         # Todo: implement
-        pass  # Remove this line
+
+        self.particles[self.index].cost = value
+
+        self.index = self.index + 1
+        if self.index >= self.num_particles:
+            self.advance_generation()
+
+            if self.best_iteration_cost > self.best_global_cost:
+                self.best_global_x = self.best_iteration_x
+                self.best_global_cost = self.best_iteration_cost
+
 
