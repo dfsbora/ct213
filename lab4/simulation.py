@@ -142,7 +142,7 @@ class Simulation:
         # Todo: implement
 
         if not detection:
-            error = 0.5
+            error = 10
         reward = linear * dot_product - 0.5 * abs(error)
 
         return reward
