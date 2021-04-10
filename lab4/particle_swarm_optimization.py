@@ -92,30 +92,30 @@ class ParticleSwarmOptimization:
         Advances the generation of particles. Auxiliary method to be used by notify_evaluation().
         """
         # Todo: implement
+        if self.particles[self.index].cost > self.particles[self.index].best_cost:
+            self.particles[self.index].best_cost = self.particles[self.index].cost
+            self.particles[self.index].best = self.particles[self.index].x
+
+            if self.particles[self.index].cost > self.best_iteration.cost:
+                self.best_iteration.cost = self.particles[self.index].cost
+                self.best_iteration.x = self.particles[self.index].x
+
+                if self.particles[self.index].cost > self.best_global.cost:
+                    self.best_global.cost = self.particles[self.index].cost
+                    self.best_global.x = self.particles[self.index].x
+
+
         w = self.hyperparams.inertia_weight
         phip = self.hyperparams.cognitive_parameter
         phig = self.hyperparams.social_parameter
-        self.best_iteration.x = None
-        self.best_iteration.cost = float("-inf")
 
-        for particle in self.particles:
+        rp = random.uniform(0.0, 1.0)
+        rg = random.uniform(0.0, 1.0)
 
-            if particle.cost > particle.best_cost:
-                particle.best_cost = particle.cost
-                particle.best = particle.x
-
-                if particle.cost > self.best_iteration.cost:
-                    self.best_iteration.cost = particle.cost
-                    self.best_iteration.x = particle.x
-
-            rp = random.uniform(0.0, 1.0)
-            rg = random.uniform(0.0, 1.0)
-
-            particle.v = w*particle.v + phip*rp*(particle.best-particle.x) + phig*rg*(self.best_global.x-particle.x)
-            particle.x = particle.x + particle.v
+        self.particles[self.index].v = w*self.particles[self.index].v + phip*rp*(self.particles[self.index].best-self.particles[self.index].x) + phig*rg*(self.best_global.x-self.particles[self.index].x)
+        self.particles[self.index].x = self.particles[self.index].x + self.particles[self.index].v
 
 
-        self.index = 0
 
     def notify_evaluation(self, value):
         """
@@ -128,12 +128,12 @@ class ParticleSwarmOptimization:
 
         self.particles[self.index].cost = value
 
+        self.advance_generation()
+
         self.index = self.index + 1
         if self.index >= self.hyperparams.num_particles:
-            self.advance_generation()
+            self.index = 0
 
-            if self.best_iteration.cost > self.best_global.cost:
-                self.best_global.x = self.best_iteration.x
-                self.best_global.cost = self.best_iteration.cost
+
 
 
