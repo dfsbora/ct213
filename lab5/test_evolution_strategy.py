@@ -7,10 +7,12 @@ import cma
 
 
 # Evolution Strategy algorithm (Simple ES or CMA-ES)
-algorithm = 'ses'  # 'ses' or 'cmaes'
+algorithm = 'cmaes'  # 'ses' or 'cmaes'
 # Function which the optimization algorithm will optimize
-function = translated_sphere  # translated_sphere, ackley, schaffer2d, rastrigin
+#function = translated_sphere  # translated_sphere, ackley, schaffer2d, rastrigin
+function = rastrigin
 fig_format = 'png'  # 'svg' (Word), 'eps' (Latex), 'png' (best compatibility/worst quality)
+fig_name = 'cmaes_rastrigin_4'
 
 
 def animate(i):
@@ -82,4 +84,5 @@ plt.contourf(X, Y, Z)
 plt.plot(history_samples[-1][:, 0], history_samples[-1][:, 1], '.r')
 plt.xlabel('X')
 plt.ylabel('Y')
-plt.savefig('evolution_strategy.%s' % fig_format, fig_format=fig_format)
+#plt.savefig('evolution_strategy.%s' % fig_format, fig_format=fig_format)
+plt.savefig(fig_name, fig_format=fig_format)

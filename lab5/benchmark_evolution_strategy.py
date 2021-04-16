@@ -10,8 +10,9 @@ import cma
 num_trials = 200  # recommended for all other functions
 # num_iterations = 200  # recommended for schaffer2d
 num_iterations = 100  # recommended for all other functions
-function = translated_sphere  # translated_sphere, ackley, schaffer2d, rastrigin
-fig_format = 'png'  # 'svg' (Word), 'eps' (Latex), 'png' (best compatibility/worst quality)
+function = translated_sphere  #ackley#schaffer2d#rastrigin
+fig_name = '_translated_sphere'#'_ackley'#'_rastrigin'#'_schaffer2d'
+fig_format = 'eps'  # 'svg' (Word), 'eps' (Latex), 'png' (best compatibility/worst quality)
 
 
 class Params:
@@ -105,7 +106,8 @@ plt.legend(['(3,6)-SES', '(6,12)-SES', '(12,24)-SES', 'CMA-ES'])
 plt.xlabel('Iteration')
 plt.ylabel('Fitness')
 plt.title('Mean Fitness - %s' % function.__name__)
-plt.savefig('mean_fitness.%s' % fig_format, fig_format=fig_format)
+#plt.savefig('mean_fitness.%s' % fig_format, fig_format=fig_format)
+plt.savefig('mean_fitness'+fig_name, fig_format=fig_format)
 plt.figure()
 plt.plot(best_ses6)
 plt.plot(best_ses12)
@@ -115,5 +117,6 @@ plt.legend(['(3,6)-SES', '(6,12)-SES', '(12,24)-SES', 'CMA-ES'])
 plt.xlabel('Iteration')
 plt.ylabel('Fitness')
 plt.title('Best Fitness - %s' % function.__name__)
-plt.savefig('best_fitness.%s' % fig_format, fig_format=fig_format)
+#plt.savefig('best_fitness.%s' % fig_format, fig_format=fig_format)
+plt.savefig('best_fitness'+fig_name, fig_format=fig_format)
 plt.show()
