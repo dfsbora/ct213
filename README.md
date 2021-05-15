@@ -11,6 +11,16 @@ $ pip install cma
 #### Lab 6:
 $ pip install pillow
 
+#### Lab 8:
+tensorflow
+tensorboard
+keras
+numpy
+matplotlib
+requests
+scikit-learn
+
+
 
 
 ## Links das Aulas
