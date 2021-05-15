@@ -8,11 +8,11 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 lambda_l2 = 0.000  # lambda parameter of the L2 regularization
-# lambda_l2 = 0.002  # lambda parameter of the L2 regularization
+#lambda_l2 = 0.002  # lambda parameter of the L2 regularization
 num_cases = 200  # number of auto-generated cases
 num_epochs = 5000  # number of epochs for training
-classification_function = sum_gt_zero  # selects sum_gt_zero as the classification function
-# classification_function = xor  # selects xor as the classification function
+#classification_function = sum_gt_zero  # selects sum_gt_zero as the classification function
+classification_function = xor  # selects xor as the classification function
 # Figure format used for saving figures
 fig_format = 'png'
 # fig_format = 'svg'
