@@ -20,7 +20,7 @@ class YoloDetector:
         :type anchor_box_post: bidimensional tuple.
         """
         self.network = load_model(model_name + '.hdf5')
-        #self.network.summary()  # prints the neural network summary
+        self.network.summary()  # prints the neural network summary
         self.anchor_box_ball = anchor_box_ball
         self.anchor_box_post = anchor_box_post
 
@@ -79,36 +79,39 @@ class YoloDetector:
         row = index // 20
         col = index % 20
         ball = output[row,col,:]
-        print(ball)
 
         pb = sigmoid(ball[0])
         xb = (col + sigmoid(ball[1])) * coord_scale
         yb = (row + sigmoid(ball[2])) * coord_scale
         wb = bb_scale * ball_anchor_width * np.exp(ball[3])
         hb = bb_scale * ball_anchor_height * np.exp(ball[4])
+        ball_detection = (pb, xb, yb, wb, hb)
 
-        index = np.argmax(output[:,:,5])
+
+        index_list = np.argsort(output[:,:,5], axis=None)
+        index = index_list[-1]
         row = index // 20
         col = index % 20
         post = output[row,col,:]
 
-        post2 = output[13,14,:]
-
-        pp = sigmoid(post[0])
-        xp = (col + sigmoid(post[1])) * coord_scale
-        yp = (row + sigmoid(post[2])) * coord_scale
-        wp = bb_scale * post_anchor_width * np.exp(post[3])
-        hp = bb_scale * post_anchor_height * np.exp(post[4])
-
-
-        pp2 = sigmoid(post2[0])
-        xp2 = (col + sigmoid(post2[1])) * coord_scale
-        yp2 = (row + sigmoid(post2[2])) * coord_scale
-        wp2 = bb_scale * post_anchor_width * np.exp(post2[3])
-        hp2 = bb_scale * post_anchor_height * np.exp(post2[4])
+        pp = sigmoid(post[5])
+        xp = (col + sigmoid(post[6])) * coord_scale
+        yp = (row + sigmoid(post[7])) * coord_scale
+        wp = bb_scale * post_anchor_width * np.exp(post[8])
+        hp = bb_scale * post_anchor_height * np.exp(post[9])
+        post1_detection = (pp, xp, yp, wp, hp)
 
 
-        ball_detection = (pb, xb, yb, wb, hb)  # Todo: change this line
-        post1_detection = (pp, xp, yp, wp, hp)  # Todo: change this line
-        post2_detection = (pp2, xp2, yp2, wp2, hp2)  # Todo: change this line
+        index = index_list[-2]
+        row = index // 20
+        col = index % 20
+        post = output[row,col,:]
+
+        pp = sigmoid(post[5])
+        xp = (col + sigmoid(post[6])) * coord_scale
+        yp = (row + sigmoid(post[7])) * coord_scale
+        wp = bb_scale * post_anchor_width * np.exp(post[8])
+        hp = bb_scale * post_anchor_height * np.exp(post[9])
+        post2_detection = (pp, xp, yp, wp, hp)
+
         return ball_detection, post1_detection, post2_detection
