@@ -82,6 +82,27 @@ def policy_evaluation(grid_world, initial_value, policy, num_iterations=10000, e
     dimensions = grid_world.dimensions
     value = np.copy(initial_value)
     # Todo: implement policy evaluation.
+
+    for index in range(num_iterations):
+        for i in range(dimensions[0]):
+            for j in range(dimensions[1]):
+                current_state = (i, j)
+                if not grid_world.is_cell_valid(current_state):
+                    continue
+                first_term = 0
+                second_term = 0
+                for action in range(NUM_ACTIONS):
+                    first_term += policy[i][j][action] * grid_world.reward(current_state, action)
+                    for next_state in grid_world.get_valid_sucessors(current_state):
+                        second_term += policy[i][j][action] * grid_world.transition_probability(current_state, action, next_state) * value
+                new_value = first_term + grid_world.gamma * second_term
+                difference = abs(value-new_value)
+                value = new_value
+                if difference.all() < epsilon:
+                    break
+        if not index % 500:
+            print('index: ', index)
+            print(value)
     return value
 
 
