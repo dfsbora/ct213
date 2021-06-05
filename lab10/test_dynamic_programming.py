@@ -55,10 +55,10 @@ def print_policy(policy):
         print(']')
 
 
-CORRECT_ACTION_PROB = 1.0  # probability of correctly executing the chosen action
-GAMMA = 1.0  # discount factor
-# CORRECT_ACTION_PROB = 0.8  # probability of correctly executing the chosen action
-# GAMMA = 0.98  # discount factor
+#CORRECT_ACTION_PROB = 1.0  # probability of correctly executing the chosen action
+#GAMMA = 1.0  # discount factor
+CORRECT_ACTION_PROB = 0.8  # probability of correctly executing the chosen action
+GAMMA = 0.98  # discount factor
 
 np.random.seed(0)
 
