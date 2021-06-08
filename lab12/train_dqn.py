@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dqn_agent import DQNAgent
 from utils import reward_engineering_mountain_car
+import tensorflow as tf
 import pylab
 
 
@@ -15,6 +16,7 @@ fig_format = 'png'  # Format used for saving matplotlib's figures
 
 # Comment this line to enable training using your GPU
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+tf.compat.v1.disable_eager_execution()
 
 # Initiating the Mountain Car environment
 env = gym.make('MountainCar-v0')
@@ -67,13 +69,13 @@ for episodes in range(1, NUM_EPISODES + 1):
     return_history.append(cumulative_reward)
     agent.update_epsilon()
     # Every 10 episodes, update the plot for training monitoring
-    if episodes % 20 == 0:
+    if episodes % 10 == 0:
         plt.plot(return_history, 'b')
         plt.xlabel('Episode')
         plt.ylabel('Return')
-        plt.show(block=False)
-        plt.pause(0.1)
-        plt.savefig('dqn_training.' + fig_format, fig_format=fig_format)
+        #plt.show(block=False)
+        #plt.pause(0.1)
+        plt.savefig('dqn_training.' + fig_format)
         # Saving the model to disk
         agent.save("mountain_car.h5")
 plt.pause(1.0)
