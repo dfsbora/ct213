@@ -42,6 +42,14 @@ scikit-learn
 
 [08 Redes Neurais Convolucionais](https://www.youtube.com/playlist?list=PLnH63ztaCPqCmOdq_BPWLhpGEK6Mlh3zu)
 
+[09 Visão Usando RNC](https://www.youtube.com/playlist?list=PLnH63ztaCPqBpOQFaFcMvufQ8hqkg4Enw)
+
+[10 Introdução ao Aprendizado por Reforço](https://www.youtube.com/playlist?list=PLnH63ztaCPqDBOARyA2aigRAS61FZyj_g)
+
+[11 Aprendizado por Reforço Livre de Modelo](https://www.youtube.com/playlist?list=PLnH63ztaCPqDuQoA083qyjS-Db1xRcE8m)
+
+[12 Aprendizado por Reforço com Aproximação de Função e Gradiente de Política](https://www.youtube.com/playlist?list=PLnH63ztaCPqA0x3IdHSuAS7Pmptcer9L2)
+
  
 Feito por Débora Ferreira. 🤖💚
 
