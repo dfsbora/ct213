@@ -76,7 +76,7 @@ print('Mean return: ', np.mean(return_history))
 plt.plot(return_history, 'b')
 plt.xlabel('Episode')
 plt.ylabel('Return')
-plt.savefig('dqn_evaluation.' + fig_format, fig_format=fig_format)
+plt.savefig('dqn_evaluation.' + fig_format)
 
 # Plots the greedy policy learned by DQN
 plt.figure()
