@@ -50,7 +50,8 @@ scikit-learn
 
 [12 Aprendizado por Reforço com Aproximação de Função e Gradiente de Política](https://www.youtube.com/playlist?list=PLnH63ztaCPqA0x3IdHSuAS7Pmptcer9L2)
 
- 
-Feito por Débora Ferreira. 🤖💚
+[   Estudo de Casos](https://www.youtube.com/playlist?list=PLnH63ztaCPqBqS46-WV06AOLFsSVLIp7s)
+
+Labs feitos por Débora Ferreira.
 
 Material base por Marcos Maximo.
