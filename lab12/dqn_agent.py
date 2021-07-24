@@ -65,7 +65,8 @@ class DQNAgent:
         :rtype: int.
         """
         # Todo: implement epsilon-greey action selection.
-        return 1  # Todo: change this line
+        q = self.model.predict(state)
+        return np.argmax(q[0]) # Todo: change this line
 
     def append_experience(self, state, action, reward, next_state, done):
         """
