@@ -24,8 +24,8 @@ print('# of training images:', train_features.shape[0])
 print('# of cross-validation images:', validation_features.shape[0])
 
 model = make_lenet5()
+model.summary()
 
-#model.summary()
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adam(), metrics=['accuracy'])
 
 X_train, y_train = train_features, to_categorical(train_labels)

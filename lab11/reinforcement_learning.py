@@ -30,11 +30,7 @@ def epsilon_greedy_action(q, state, epsilon):
     :rtype: int.
     """
     # Todo: implement
-    if np.random.uniform(0,1) < epsilon:
-        action = np.random.randint(0,2)
-    else:
-        action = greedy_action(q, state)
-    return action
+    return 0  # change this line
 
 
 def greedy_action(q, state):
@@ -49,8 +45,8 @@ def greedy_action(q, state):
     :rtype: int.
     """
     # Todo: implement
-    action = np.argmax(q[state])
-    return action
+    return 0  # change this line
+
 
 class RLAlgorithm:
     """
@@ -135,12 +131,10 @@ class Sarsa(RLAlgorithm):
         :rtype: int.
         """
         # Todo: implement
-        action = epsilon_greedy_action(self.q, state, self.epsilon)
-        return action
+        return 0
 
     def learn(self, state, action, reward, next_state, next_action):
         # Todo: implement
-        self.q[state][action] = self.q[state][action] + self.alpha * (reward + self.gamma*self.q[next_state][next_action] - self.q[state][action])
         pass
 
 
@@ -150,10 +144,8 @@ class QLearning(RLAlgorithm):
 
     def get_greedy_action(self, state):
         # Todo: implement
-        action = greedy_action(self.q, state)
-        return action
+        return 0
 
     def learn(self, state, action, reward, next_state, next_action):
         # Todo: implement
-        self.q[state][action] = self.q[state][action] + self.alpha* ( reward + self.gamma* np.max(self.q[next_state]) - self.q[state][action])
         pass

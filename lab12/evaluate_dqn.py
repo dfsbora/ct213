@@ -23,6 +23,7 @@ fig_format = 'png'  # Format used for saving matplotlib's figures
 
 # Comment this line to enable training using your GPU
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
 tf.compat.v1.disable_eager_execution()
 
 # Initiating the Mountain Car environment
@@ -76,7 +77,7 @@ print('Mean return: ', np.mean(return_history))
 plt.plot(return_history, 'b')
 plt.xlabel('Episode')
 plt.ylabel('Return')
-plt.savefig('dqn_evaluation.' + fig_format)
+plt.savefig('dqn_evaluation.' + fig_format, fig_format=fig_format)
 
 # Plots the greedy policy learned by DQN
 plt.figure()
@@ -104,5 +105,5 @@ plt.xlabel('Position')
 plt.ylabel('Velocity')
 plt.title('Agent Policy')
 plt.legend(['Left', 'None', 'Right'])
-plt.savefig('agent_decision.' + fig_format)
+plt.savefig('agent_decision.' + fig_format, format=fig_format)
 plt.show()

@@ -35,9 +35,9 @@ class YoloDetector:
         :rtype: 3-dimensional tuple of 5-dimensional tuples.
         """
         # Todo: implement object detection logic
-        image = self.preprocess_image(image)
-        output = self.network.predict(image)
-        ball_detection, post1_detection, post2_detection = self.process_yolo_output(output)
+        ball_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: remove this line
+        post1_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: remove this line
+        post2_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: remove this line
         return ball_detection, post1_detection, post2_detection
 
     def preprocess_image(self, image):
@@ -50,10 +50,6 @@ class YoloDetector:
         :rtype: NumPy 4-dimensional array with dimensions (1, 120, 160, 3).
         """
         # Todo: implement image preprocessing logic
-        image = cv2.resize(image, (160, 120), interpolation=cv2.INTER_AREA)
-        image = np.array(image)
-        image = image/255.0
-        image = np.reshape(image, (1, 120, 160, 3))
         return image
 
     def process_yolo_output(self, output):
@@ -68,50 +64,9 @@ class YoloDetector:
         """
         coord_scale = 4 * 8  # coordinate scale used for computing the x and y coordinates of the BB's center
         bb_scale = 640  # bounding box scale used for computing width and height
-        ball_anchor_height = 5
-        ball_anchor_width = 5
-        post_anchor_height = 5
-        post_anchor_width = 2
         output = np.reshape(output, (15, 20, 10))  # reshaping to remove the first dimension
-
         # Todo: implement YOLO logic
-        index = np.argmax(output[:,:,0])
-        row = index // 20
-        col = index % 20
-        ball = output[row,col,:]
-
-        pb = sigmoid(ball[0])
-        xb = (col + sigmoid(ball[1])) * coord_scale
-        yb = (row + sigmoid(ball[2])) * coord_scale
-        wb = bb_scale * ball_anchor_width * np.exp(ball[3])
-        hb = bb_scale * ball_anchor_height * np.exp(ball[4])
-        ball_detection = (pb, xb, yb, wb, hb)
-
-
-        index_list = np.argsort(output[:,:,5], axis=None)
-        index = index_list[-1]
-        row = index // 20
-        col = index % 20
-        post = output[row,col,:]
-
-        pp = sigmoid(post[5])
-        xp = (col + sigmoid(post[6])) * coord_scale
-        yp = (row + sigmoid(post[7])) * coord_scale
-        wp = bb_scale * post_anchor_width * np.exp(post[8])
-        hp = bb_scale * post_anchor_height * np.exp(post[9])
-        post1_detection = (pp, xp, yp, wp, hp)
-
-
-        index = index_list[-2]
-        row = index // 20
-        col = index % 20
-        post = output[row,col,:]
-
-        pp = sigmoid(post[5])
-        xp = (col + sigmoid(post[6])) * coord_scale
-        yp = (row + sigmoid(post[7])) * coord_scale
-        wp = bb_scale * post_anchor_width * np.exp(post[8])
-        hp = bb_scale * post_anchor_height * np.exp(post[9])
-        post2_detection = (pp, xp, yp, wp, hp)
-
+        ball_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: change this line
+        post1_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: change this line
+        post2_detection = (0.0, 0.0, 0.0, 0.0, 0.0)  # Todo: change this line
         return ball_detection, post1_detection, post2_detection

@@ -87,7 +87,6 @@ def show_detections(image_name, image, ball_detection, post1_detection, post2_de
 detector = YoloDetector('yolo_ball_goalpost')
 
 # Iterating over images, running the detector and showing the detections
-avg_time = 0
 for i in range(1, NUM_IMAGES + 1):
     image_name = 'imagem' + str(i)
     image = load_image(image_name)
@@ -96,11 +95,9 @@ for i in range(1, NUM_IMAGES + 1):
     tic = time.time()
     ball_detection, post1_detection, post2_detection = detector.detect(image)
     toc = time.time()
-    avg_time = avg_time + toc - tic
     print(image_name + ': [(ball_prob: ' + str(ball_detection[0]) + ', post1_prob: ' + str(post1_detection[0]) +
           ', post2_prob: ' + str(post2_detection[0]) + '), processing time: ' + str(toc - tic) + ']')
     show_detections(image_name, image, ball_detection, post1_detection, post2_detection)
     plt.savefig(image_name + '_detection.png')
 
-print(avg_time/NUM_IMAGES)
 plt.show()

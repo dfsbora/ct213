@@ -82,27 +82,6 @@ def policy_evaluation(grid_world, initial_value, policy, num_iterations=10000, e
     dimensions = grid_world.dimensions
     value = np.copy(initial_value)
     # Todo: implement policy evaluation.
-
-    for index in range(num_iterations):
-        for i in range(dimensions[0]):
-            for j in range(dimensions[1]):
-                current_state = (i, j)
-                if not grid_world.is_cell_valid(current_state):
-                    continue
-                first_term = 0
-                second_term = 0
-                for action in range(NUM_ACTIONS):
-                    first_term += policy[i][j][action] * grid_world.reward(current_state, action)
-                    for next_state in grid_world.get_valid_sucessors(current_state):
-                        second_term += policy[i][j][action] * grid_world.transition_probability(current_state, action, next_state) * value[next_state[0]][next_state[1]]
-                new_value = first_term + grid_world.gamma * second_term
-                difference = abs(value-new_value)
-                value[i][j] = new_value
-                if difference.any() < epsilon:
-                    break
-        #if not index % 1000:
-            #print('index: ', index)
-            #print(value)
     return value
 
 
@@ -124,29 +103,6 @@ def value_iteration(grid_world, initial_value, num_iterations=10000, epsilon=1.0
     dimensions = grid_world.dimensions
     value = np.copy(initial_value)
     # Todo: implement value iteration.
-
-    for index in range(num_iterations):
-        for i in range(dimensions[0]):
-            for j in range(dimensions[1]):
-                current_state = (i, j)
-                if not grid_world.is_cell_valid(current_state):
-                    continue
-                value_list = []
-                for action in range(NUM_ACTIONS):
-                    first_term = grid_world.reward(current_state, action)
-                    second_term = 0
-                    for next_state in grid_world.get_valid_sucessors(current_state):
-                        second_term += grid_world.transition_probability(current_state, action, next_state) * value[next_state[0]][next_state[1]]
-                    new_value = first_term + grid_world.gamma * second_term
-                    value_list.append(new_value)
-                max_value = max(value_list)
-                difference = abs(value-max_value)
-                value[i][j] = max_value
-                if difference.any() < epsilon:
-                    break
-        #if not index % 1000:
-            #print('index: ', index)
-            #print(value)
     return value
 
 
@@ -175,18 +131,5 @@ def policy_iteration(grid_world, initial_value, initial_policy, evaluations_per_
     value = np.copy(initial_value)
     policy = np.copy(initial_policy)
     # Todo: implement policy iteration.
-
-    for index in range(num_iterations):
-        new_value = policy_evaluation(grid_world, value, policy, num_iterations=evaluations_per_policy)
-        policy = greedy_policy(grid_world, new_value)
-
-        difference = abs(value-new_value)
-        value = new_value
-        if difference.any() < epsilon:
-            break
-
-        #if not index % 10:
-            #print('index: ', index)
-            #print(value)
     return value, policy
 
