@@ -48,13 +48,7 @@ class NeuralNetwork:
         z[0] = inputs
         a[0] = inputs
         # Add logic for neural network inference
-        z[1] = self.weights[1]@a[0] + self.biases[1]
-        a[1] = sigmoid(z[1])
-        z[2] = self.weights[2]@a[1] + self.biases[2]
-        a[2] = sigmoid(z[2])
-
-
-        #a[2] = 0.001 * np.ones((self.num_outputs, inputs.shape[1]))  # Change this line
+        a[2] = 0.001 * np.ones((self.num_outputs, inputs.shape[1]))  # Change this line
         return z, a
 
     def compute_cost(self, inputs, expected_outputs):
@@ -89,33 +83,8 @@ class NeuralNetwork:
         """
         weights_gradient = [None] * 3
         biases_gradient = [None] * 3
-        delta = [None] * 3
+
         # Add logic to compute the gradients
-        #expected_outputs = np.transpose(expected_outputs.reshape((expected_outputs.shape[0], 1)))
-
-        #print("I/O: ", np.shape(inputs), np.shape(expected_outputs))
-
-        z, a = self.forward_propagation(inputs)
-
-        #print("\nforward z: ", np.shape(z[0]), np.shape(z[1]), np.shape(z[2]))
-        #print("forward a: ", np.shape(a[0]), np.shape(a[1]), np.shape(a[2]))
-
-        delta[2] = (a[2]-expected_outputs) * sigmoid_derivative(z[2])
-        #print("\nd2: ", np.shape(delta[2]), "a1: ", np.shape(a[1]))
-        weights_gradient[2] = (delta[2] @ np.transpose(a[1]))/inputs.shape[1]
-        biases_gradient[2] = np.mean(delta[2], axis=1)
-        biases_gradient[2] = np.array(biases_gradient[2])
-        biases_gradient[2] = biases_gradient[2].reshape((biases_gradient[2].shape[0], 1))
-
-        #print("------")
-        delta[1] = (np.transpose(self.weights[2]) @ delta[2]) * sigmoid_derivative(z[1])
-        #print("d1: ", np.shape(delta[1]), "a0: ", np.shape(inputs))
-        weights_gradient[1] = (delta[1] @ np.transpose(a[0]))/inputs.shape[1]
-
-        biases_gradient[1] = np.mean(delta[1], axis=1)
-        biases_gradient[1] = np.array(biases_gradient[1])
-        biases_gradient[1] = biases_gradient[1].reshape((biases_gradient[1].shape[0], 1))
-        #print("wg2: ", np.shape(weights_gradient[2]), "b2: ", np.shape(biases_gradient[2]), "wg1: ", np.shape(weights_gradient[1]), "b1: ", np.shape(biases_gradient[1]))
 
         return weights_gradient, biases_gradient
 
@@ -130,14 +99,4 @@ class NeuralNetwork:
         """
         weights_gradient, biases_gradient = self.compute_gradient_back_propagation(inputs, expected_outputs)
         # Add logic to update the weights and biases
-
-        #print("weights: ", np.shape(self.weights[2]), np.shape(self.biases[2]),  np.shape(self.weights[1]), np.shape(self.biases[1]))
-
-        self.weights[2] = self.weights[2] - self.alpha * weights_gradient[2]
-        self.weights[1] = self.weights[1] - self.alpha * weights_gradient[1]
-        self.biases[2] = self.biases[2] - self.alpha * biases_gradient[2]
-        self.biases[1] = self.biases[1] - self.alpha * biases_gradient[1]
-
-
-        #print("new weights: ", np.shape(self.weights[2]), np.shape(self.biases[2]),  np.shape(self.weights[1]), np.shape(self.biases[1]))
-        #pass # Remove this line
+        pass # Remove this line

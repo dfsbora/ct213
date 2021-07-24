@@ -9,7 +9,7 @@ FREQUENCY = 60.0  # simulation frequency
 SAMPLE_TIME = 1.0 / FREQUENCY  # simulation sample time
 
 # Behavior Parameters
-MOVE_FORWARD_TIME = 5.0  # time moving forward before switching to the spiral behavior
+MOVE_FORWARD_TIME = 3.0  # time moving forward before switching to the spiral behavior
 MOVE_IN_SPIRAL_TIME = 20.0  # time moving in spiral before switching back to moving forward
 GO_BACK_TIME = 0.5  # time going back after hitting a wall
 FORWARD_SPEED = 0.5  # default linear speed when going forward

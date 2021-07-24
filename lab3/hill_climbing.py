@@ -1,5 +1,4 @@
 from math import inf
-import numpy as np
 
 
 def hill_climbing(cost_function, neighbors, theta0, epsilon, max_iterations):
@@ -24,17 +23,4 @@ def hill_climbing(cost_function, neighbors, theta0, epsilon, max_iterations):
     theta = theta0
     history = [theta0]
     # Todo: Implement Hill Climbing
-
-    for i in range(0,max_iterations):
-        best = np.array([None, None])
-        cost_best = inf
-        for neighbor in neighbors(theta):
-            if cost_function(neighbor) < cost_best:
-                best = neighbor
-                cost_best = cost_function(neighbor)
-        if cost_best > cost_function(theta):
-            return theta, history
-        theta = best
-        history.append(theta)
-
     return theta, history

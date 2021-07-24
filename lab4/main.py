@@ -217,8 +217,7 @@ pso = ParticleSwarmOptimization(hyperparams, lower_bound, upper_bound)
 
 # Creating track
 # Switch to simple track if you are having trouble to make the robot learn in the complex track
-track = create_complex_track()
-#track = create_simple_track()
+track = create_complex_track()  # create_simple_track()
 
 # Creating the simulation
 simulation = Simulation(line_follower, track)

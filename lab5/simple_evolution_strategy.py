@@ -44,20 +44,4 @@ class SimpleEvolutionStrategy:
         :type fitnesses: numpy array of floats.
         """
         # Todo: implement this method
-        #ordena fitness e aplica mesma ordem a samples, escolhe mi elementos
-        indices = np.argsort(fitnesses)
-        best_samples = self.samples[indices[0:self.mu],:]
-
-        #calcula nova media e variancia
-        array2d = (best_samples-self.m)#[np.newaxis]
-        aux = array2d.transpose().dot(array2d)
-        self.C = (1/self.mu) * aux
-        #print("C(2,2): ", np.shape(self.C))
-
-        self.m =  np.sum(best_samples, axis = 0)/self.mu
-        #print("m(2,): ", np.shape(self.m))
-
-        #amostra novos samples
-        self.samples = np.random.multivariate_normal(self.m, self.C, self.population_size)
-
-
+        pass  # remove this line

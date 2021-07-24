@@ -1,5 +1,5 @@
 from enum import Enum
-import constants
+from constants import *
 import random
 import math
 
@@ -184,90 +184,48 @@ class RoombaBehaviorTree(BehaviorTree):
     def __init__(self):
         super().__init__()
         # Todo: construct the tree here
-        forward = MoveForwardNode()
-        spiral = MoveInSpiralNode()
-        back = GoBackNode()
-        rotate = RotateNode()
-        seq1 = SequenceNode("seq1")
-        seq1.add_child(forward)
-        seq1.add_child(spiral)
-        seq2 = SequenceNode("seq2")
-        seq2.add_child(back)
-        seq2.add_child(rotate)
-        selector = SelectorNode("selector")
-        selector.add_child(seq1)
-        selector.add_child(seq2)
-        self.root = selector
-
-
 
 
 class MoveForwardNode(LeafNode):
     def __init__(self):
         super().__init__("MoveForward")
+        # Todo: add initialization code
 
     def enter(self, agent):
         # Todo: add enter logic
-        self.t = 0
-        self.v = constants.FORWARD_SPEED
-        self.w = 0
+        pass
 
     def execute(self, agent):
         # Todo: add execution logic
-        agent.set_velocity(self.v, self.w)
-        self.t += constants.SAMPLE_TIME
-        if agent.get_bumper_state():
-            return ExecutionStatus.FAILURE
-        elif self.t > constants.MOVE_FORWARD_TIME:
-            return ExecutionStatus.SUCCESS
-        else:
-            return ExecutionStatus.RUNNING
+        pass
 
 
 class MoveInSpiralNode(LeafNode):
     def __init__(self):
         super().__init__("MoveInSpiral")
-
+        # Todo: add initialization code
 
     def enter(self, agent):
         # Todo: add enter logic
-        self.t = 0
-        self.v = constants.FORWARD_SPEED
-        self.w = constants.ANGULAR_SPEED
+        pass
 
     def execute(self, agent):
         # Todo: add execution logic
-        radius = constants.INITIAL_RADIUS_SPIRAL + constants.SPIRAL_FACTOR * self.t
-        self.w = self.v/radius
-        agent.set_velocity(self.v, self.w)
-        self.t += constants.SAMPLE_TIME
-        if agent.get_bumper_state():
-            return ExecutionStatus.FAILURE
-        elif self.t > constants.MOVE_IN_SPIRAL_TIME:
-            return ExecutionStatus.SUCCESS
-        else:
-            return ExecutionStatus.RUNNING
+        pass
 
 
 class GoBackNode(LeafNode):
     def __init__(self):
         super().__init__("GoBack")
-
+        # Todo: add initialization code
 
     def enter(self, agent):
         # Todo: add enter logic
-        self.t = 0
-        self.v = constants.BACKWARD_SPEED
-        self.w = 0
+        pass
 
     def execute(self, agent):
         # Todo: add execution logic
-        agent.set_velocity(self.v, self.w)
-        self.t += constants.SAMPLE_TIME
-        if self.t > constants.GO_BACK_TIME:
-            return ExecutionStatus.SUCCESS
-        else:
-            return ExecutionStatus.RUNNING
+        pass
 
 
 class RotateNode(LeafNode):
@@ -277,16 +235,9 @@ class RotateNode(LeafNode):
 
     def enter(self, agent):
         # Todo: add enter logic
-        self.t = 0
-        self.v = 0
-        self.w = constants.ANGULAR_SPEED
-        self.t_max = random.uniform(-math.pi, math.pi) / self.w
+        pass
 
     def execute(self, agent):
         # Todo: add execution logic
-        agent.set_velocity(self.v, self.w)
-        self.t += constants.SAMPLE_TIME
-        if self.t > self.t_max:
-            return ExecutionStatus.SUCCESS
-        else:
-            return ExecutionStatus.RUNNING
+        pass
+

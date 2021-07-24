@@ -68,7 +68,6 @@ def fit_hill_climbing():
     # Hyperparameters used for computing the neighbors
     delta = 2.0e-3
     num_neighbors = 8
-    angle = 2*pi/num_neighbors
 
     def neighbors(theta):
         """
@@ -83,12 +82,6 @@ def fit_hill_climbing():
         """
         neighbors_list = []
         # Todo: Implement
-
-        for i in range(num_neighbors):
-            x = theta[0] + cos(angle*i)*delta
-            y = theta[1] + sin(angle*i)*delta
-            neighbor = np.array([x, y])
-            neighbors_list.append(neighbor)
         return neighbors_list
 
     theta, history = hill_climbing(cost_function, neighbors, np.array([0.0, 0.0]), 1.0e-10, 1000)
@@ -122,11 +115,7 @@ def fit_simulated_annealing():
         :rtype: numpy.array.
         """
         # Todo: Implement
-        angle = random.uniform(-pi, pi)
-        x = theta[0] + cos(angle)*delta
-        y = theta[1] + sin(angle)*delta
-        neighbor = np.array([x, y])
-        return neighbor
+        pass  # Remove pass after implementing
 
     def schedule(i):
         """
@@ -138,8 +127,7 @@ def fit_simulated_annealing():
         :rtype: float.
         """
         # Todo: Implement
-        temperature = temperature0 / (1 + beta*i**2)
-        return temperature
+        pass  # Remove pass after implementing
 
     theta, history = simulated_annealing(cost_function, random_neighbor, schedule, np.array([0.0, 0.0]), 1.0e-10, 5000)
     return theta, history
